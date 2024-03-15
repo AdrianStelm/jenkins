@@ -1,0 +1,30 @@
+---
+- name: Configuration Management Playbook
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update system
+      apt:
+        update_cache: yes
+        upgrade: yes
+      tags: 
+        - updateos
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: latest
+      tags:
+        - nginx
+
+    - name: Download OpenVPN install script
+      command: "curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh"
+      tags:
+        - vpn
+
+    - name: Set permissions for OpenVPN install
+      command: "chmod +x openvpn-install.sh"
+      tags:
+        - vpn
+
+
